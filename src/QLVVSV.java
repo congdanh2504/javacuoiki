@@ -42,10 +42,11 @@ public class QLVVSV extends JFrame {
 			contentPane.add(panel);
 			panel.setLayout(null);
 			JLabel lbltitle = new JLabel("Hệ thống quản lí vay vốn sinh viên");
+			lbltitle.setIcon(new ImageIcon("system.png"));
 			lbltitle.setHorizontalAlignment(SwingConstants.CENTER);
 			lbltitle.setBackground(new Color(255, 255, 255));
 			lbltitle.setForeground(new Color(255, 255, 255));
-			lbltitle.setFont(new Font("Serif", Font.BOLD, 40));
+			lbltitle.setFont(new Font("Serif", Font.BOLD, 35));
 			lbltitle.setBounds(100, 10, 585, 85);
 			panel.add(lbltitle);
 			JButton btnXem = new JButton("Xem", new ImageIcon("sea.png"));

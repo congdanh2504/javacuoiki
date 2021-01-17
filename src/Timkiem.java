@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -30,6 +31,9 @@ import javax.swing.UIManager;
 public class Timkiem extends JFrame {
 	private JPanel contentPane;
 	private JTextField nhapten;
+	DefaultTableModel model;
+	JScrollPane tableresult;
+	int count=1000;
 	Vector vData=null, vTitle=null;
     public String Standardized(String str) {
     	str = str.trim();
@@ -155,9 +159,13 @@ public class Timkiem extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JScrollPane tableresult = new JScrollPane(new JTable(vData,vTitle));
+			if (count!=1000)	
+				contentPane.remove(tableresult);
+			model = new DefaultTableModel(vData,vTitle);
+			count+=1;
+			tableresult = new JScrollPane(new JTable(model));
 			contentPane.add(tableresult, BorderLayout.CENTER);	
-			setSize(1001,600);
+			setSize(count,600);
 			JOptionPane.showMessageDialog(null, "Tìm thấy "+vData.size()+" kết quả");
 		}
 	}
