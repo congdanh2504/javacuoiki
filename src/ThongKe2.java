@@ -41,7 +41,7 @@ public class ThongKe2 extends JFrame {
 			for (int i=0;i<list.size();i++) {
 				categoryDataset.setValue(Double.parseDouble(list.get(i)), "Lãi xuất", list1.get(i));
 			}
-			JFreeChart jFreeChart = ChartFactory.createBarChart("Biểu đồ lãi vay từng ngân hàng","Tên ngân hàng","Lãi vay (%)", categoryDataset,PlotOrientation.VERTICAL, true, true, false);
+			JFreeChart jFreeChart = ChartFactory.createBarChart("Biểu đồ lãi vay từng ngân hàng","Tên ngân hàng","Lãi vay (%/tháng)", categoryDataset,PlotOrientation.VERTICAL, true, true, false);
 			CategoryPlot p = (CategoryPlot) jFreeChart.getPlot();
 			ChartFrame chartFrame = new ChartFrame("Thống kê",jFreeChart);
 			chartFrame.setVisible(true);

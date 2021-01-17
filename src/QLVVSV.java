@@ -48,7 +48,7 @@ public class QLVVSV extends JFrame {
 			lbltitle.setFont(new Font("Serif", Font.BOLD, 40));
 			lbltitle.setBounds(100, 10, 585, 85);
 			panel.add(lbltitle);
-			JButton btnXem = new JButton("Xem");
+			JButton btnXem = new JButton("Xem", new ImageIcon("sea.png"));
 			btnXem.setForeground(new Color(255, 255, 255));
 			btnXem.setBackground(new Color(64, 157, 250));
 			btnXem.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -60,7 +60,7 @@ public class QLVVSV extends JFrame {
 			});
 			btnXem.setBounds(60, 100, 190, 70);
 			panel.add(btnXem);
-			JButton btnTimkiem = new JButton("Tìm kiếm");
+			JButton btnTimkiem = new JButton("Tìm kiếm", new ImageIcon("xem.png"));
 			btnTimkiem.setForeground(new Color(255, 255, 255));
 			btnTimkiem.setBackground(new Color(64, 157, 250));
 			btnTimkiem.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -72,7 +72,7 @@ public class QLVVSV extends JFrame {
 			});
 			btnTimkiem.setBounds(60, 200, 190, 70);
 			panel.add(btnTimkiem);	
-			JButton btnCapNhat = new JButton("Cập nhật");
+			JButton btnCapNhat = new JButton("Cập nhật", new ImageIcon("update.png"));
 			btnCapNhat.setForeground(new Color(255, 255, 255));
 			btnCapNhat.setBackground(new Color(64, 157, 250));
 			btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -84,7 +84,7 @@ public class QLVVSV extends JFrame {
 			});
 			btnCapNhat.setBounds(60, 300, 190, 70);
 			panel.add(btnCapNhat);
-			JButton btnThongKe = new JButton("Thống kê");
+			JButton btnThongKe = new JButton("Thống kê", new ImageIcon("thongke.png"));
 			btnThongKe.setForeground(new Color(255, 255, 255));
 			btnThongKe.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -101,7 +101,7 @@ public class QLVVSV extends JFrame {
 			btnThongKe.setFocusable(false);
 			btnTimkiem.setFocusable(false);
 			JLabel lblicon = new JLabel("");
-			lblicon.setBounds(400, 120, 330, 330);
+			lblicon.setBounds(380, 120, 330, 330);
 			lblicon.setIcon(new ImageIcon("loan1.png"));
 			panel.add(lblicon);
 			setTitle("Hệ thống quản lí vay vốn ngân hàng của sinh viên");

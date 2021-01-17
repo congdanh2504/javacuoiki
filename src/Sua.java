@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -67,7 +68,7 @@ public class Sua extends JFrame implements MouseListener{
 			JPanel pnback = new JPanel();
 			pnback.setLayout(new BorderLayout());
 			pnback.setBackground(new Color(64, 157, 250));
-			JButton Back = new JButton("Quay lại");
+			JButton Back = new JButton("Quay lại", new ImageIcon("back.png"));
 			pnback.add(Back, BorderLayout.WEST);
 			contentPane.add(pnback, BorderLayout.NORTH);
 			Back.setForeground(new Color(255, 255, 255));
@@ -86,7 +87,7 @@ public class Sua extends JFrame implements MouseListener{
 			JPanel sinhVienm = new JPanel();
 			sinhVien.add(sinhVienm, BorderLayout.SOUTH);
 			sinhVienm.setLayout(new FlowLayout());
-			JButton sSua = new JButton("Sửa");
+			JButton sSua = new JButton("Sửa", new ImageIcon("edit.png"));
 			sinhVienm.add(sSua);
 			sSua.setForeground(new Color(255, 255, 255));
 			sSua.setBackground(new Color(64, 157, 250));
@@ -105,7 +106,7 @@ public class Sua extends JFrame implements MouseListener{
 				}
 			});
 			sSua.setFont(new Font("Tahoma", Font.BOLD, 21));
-			JButton sXoa = new JButton("Xóa");
+			JButton sXoa = new JButton("Xóa", new ImageIcon("delete.png"));
 			sinhVienm.add(sXoa);
 			sXoa.setForeground(new Color(255, 255, 255));
 			sXoa.setBackground(new Color(64, 157, 250));
@@ -138,7 +139,7 @@ public class Sua extends JFrame implements MouseListener{
 					
 				}
 			});
-			JButton sChen = new JButton("Chèn");
+			JButton sChen = new JButton("Chèn", new ImageIcon("insert.png"));
 			sChen.setForeground(new Color(255, 255, 255));
 			sChen.setBackground(new Color(64, 157, 250));
 			sChen.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -157,7 +158,7 @@ public class Sua extends JFrame implements MouseListener{
 			JPanel hoSom = new JPanel();
 			hoSo.add(hoSom, BorderLayout.SOUTH);
 			hoSom.setLayout(new FlowLayout());
-			JButton hSua = new JButton("Sửa");
+			JButton hSua = new JButton("Sửa", new ImageIcon("edit.png"));
 			hoSom.add(hSua);
 			hSua.setForeground(new Color(255, 255, 255));
 			hSua.setBackground(new Color(64, 157, 250));
@@ -175,7 +176,7 @@ public class Sua extends JFrame implements MouseListener{
 					}
 				}
 			});
-			JButton hXoa = new JButton("Xóa");
+			JButton hXoa = new JButton("Xóa", new ImageIcon("delete.png"));
 			hoSom.add(hXoa);
 			hXoa.setForeground(new Color(255, 255, 255));
 			hXoa.setBackground(new Color(64, 157, 250));
@@ -211,7 +212,7 @@ public class Sua extends JFrame implements MouseListener{
 					}
 				}
 			});
-			JButton hChen = new JButton("Chèn");
+			JButton hChen = new JButton("Chèn", new ImageIcon("insert.png"));
 			hChen.setForeground(new Color(255, 255, 255));
 			hChen.setBackground(new Color(64, 157, 250));
 			hChen.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -230,7 +231,7 @@ public class Sua extends JFrame implements MouseListener{
 			JPanel nganHangm = new JPanel();
 			nganHang.add(nganHangm, BorderLayout.SOUTH);
 			nganHangm.setLayout(new FlowLayout());
-			JButton nSua = new JButton("Sửa");
+			JButton nSua = new JButton("Sửa", new ImageIcon("edit.png"));
 			nganHangm.add(nSua);
 			nSua.setForeground(new Color(255, 255, 255));
 			nSua.setBackground(new Color(64, 157, 250));
@@ -248,7 +249,7 @@ public class Sua extends JFrame implements MouseListener{
 					}
 				}
 			});
-			JButton nXoa = new JButton("Xóa");
+			JButton nXoa = new JButton("Xóa", new ImageIcon("delete.png"));
 			nganHangm.add(nXoa);
 			nXoa.setForeground(new Color(255, 255, 255));
 			nXoa.setBackground(new Color(64, 157, 250));
@@ -280,7 +281,7 @@ public class Sua extends JFrame implements MouseListener{
 					}
 				}
 			});
-			JButton nChen = new JButton("Chèn");
+			JButton nChen = new JButton("Chèn", new ImageIcon("insert.png"));
 			nChen.setForeground(new Color(255, 255, 255));
 			nChen.setBackground(new Color(64, 157, 250));
 			nChen.setFont(new Font("Tahoma", Font.BOLD, 21));

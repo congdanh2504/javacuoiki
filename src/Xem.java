@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class Xem extends JFrame {
 			contentPane = new JPanelWithBackground("bluez.jpg");
 			setContentPane(contentPane);
 			contentPane.setLayout(new BorderLayout());	
-			JButton btnback = new JButton("Quay lại");
+			JButton btnback = new JButton("Quay lại", new ImageIcon("back.png"));
 			btnback.setForeground(new Color(255, 255, 255));
 			btnback.setBackground(new Color(64, 157, 250));
 			btnback.addActionListener(new ActionListener() {

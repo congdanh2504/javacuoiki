@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -48,7 +49,7 @@ public class Timkiem extends JFrame {
 			contentPane = new JPanelWithBackground("bluez.jpg");
 			setContentPane(contentPane);
 			contentPane.setLayout(new BorderLayout());
-			JButton btnback = new JButton("Quay lại");
+			JButton btnback = new JButton("Quay lại", new ImageIcon("back.png"));
 			btnback.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnback.setForeground(new Color(255, 255, 255));
 			btnback.setBackground(new Color(64, 157, 250));
@@ -97,10 +98,11 @@ public class Timkiem extends JFrame {
 			lblnhap.setFont(new Font("Tahoma", Font.BOLD, 21));
 			jPanel.add(lblnhap);
 			jPanel.add(nhapten);
-			JButton btntim = new JButton("Tìm");
+			JButton btntim = new JButton("Tìm", new ImageIcon("tim.png"));
 			btntim.setForeground(new Color(255, 255, 255));
 			btntim.setBackground(new Color(64, 157, 250));
-			jPanel.add(btntim);			
+			jPanel.add(btntim);	
+			btntim.setFocusable(false);
 			btntim.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					display();
