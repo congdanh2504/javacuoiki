@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -43,31 +44,31 @@ public class Timkiem extends JFrame {
     }
 	public Timkiem() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(210, 100, 1000, 585);
 		try {
 			contentPane = new JPanelWithBackground("bluez.jpg");
-			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
-			contentPane.setLayout(null);
-			JButton btnback = new JButton("Quay lui");
+			contentPane.setLayout(new BorderLayout());
+			JButton btnback = new JButton("Quay lại");
 			btnback.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnback.setForeground(new Color(255, 255, 255));
 			btnback.setBackground(new Color(64, 157, 250));
+			JPanel pnback = new JPanel();
+			pnback.setLayout(new BorderLayout());
+			pnback.setBackground(new Color(64, 157, 250));
+			pnback.add(btnback, BorderLayout.WEST);
+			contentPane.add(pnback,BorderLayout.NORTH);
 			btnback.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					dispose();
 					new QLVVSV();
 				}
 			});
-			btnback.setBounds(10, 10, 90, 25);
 			btnback.setFocusable(false);
-			contentPane.add(btnback);
-			JPanel panel = new JPanel();
-			panel.setBackground(new Color(255, 255, 255));
-			panel.setBounds(10, 45, 965, 440);
-			contentPane.add(panel);
+			//contentPane.add(btnback, BorderLayout.NORTH);
+			JPanel jPanel = new JPanelWithBackground("bluez.jpg");
+			contentPane.add(jPanel, BorderLayout.SOUTH);
+			jPanel.setLayout(new FlowLayout());
 			nhapten = new JTextField();
-			nhapten.setBounds(350, 500, 256, 38);
 			nhapten.addKeyListener(new KeyListener() {
 				
 				@Override
@@ -90,26 +91,25 @@ public class Timkiem extends JFrame {
 					}
 				}
 			});
-			contentPane.add(nhapten);
 			nhapten.setColumns(10);
 			JLabel lblnhap = new JLabel("Nhập mã sinh viên hoặc tên:");
 			lblnhap.setForeground(Color.WHITE);
 			lblnhap.setFont(new Font("Tahoma", Font.BOLD, 21));
-			lblnhap.setBounds(50, 500, 310, 40);
-			contentPane.add(lblnhap);
+			jPanel.add(lblnhap);
+			jPanel.add(nhapten);
 			JButton btntim = new JButton("Tìm");
 			btntim.setForeground(new Color(255, 255, 255));
 			btntim.setBackground(new Color(64, 157, 250));
+			jPanel.add(btntim);			
 			btntim.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					display();
 				}
 			});
 			btntim.setFont(new Font("Tahoma", Font.BOLD, 21));
-			btntim.setBounds(620, 500, 100, 40);
-			contentPane.add(btntim);
+			setSize(1000,600);
+			setLocation(200,100);
 			setTitle("Tìm kiếm");
-			setResizable(false);
 			setVisible(true);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -122,10 +122,6 @@ public class Timkiem extends JFrame {
 			JOptionPane.showMessageDialog(null, "Vui lòng nhập");
 		} else {
 			ten = Standardized(ten);
-			JPanel panel = new JPanel();
-			panel.setBackground(Color.WHITE);
-			panel.setBounds(10, 45, 970, 490);
-			contentPane.add(panel);
 			dataConnection con = (dataConnection) new dataConnection();
 			Connection conn = con.ConnectDB();
 			try {
@@ -157,11 +153,9 @@ public class Timkiem extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			panel.setLayout(null);
 			JScrollPane tableresult = new JScrollPane(new JTable(vData,vTitle));
-			tableresult.setLocation(10, 10);
-			tableresult.setSize(950, 410);
-			panel.add(tableresult);	
+			contentPane.add(tableresult, BorderLayout.CENTER);	
+			setSize(1001,600);
 			JOptionPane.showMessageDialog(null, "Tìm thấy "+vData.size()+" kết quả");
 		}
 	}

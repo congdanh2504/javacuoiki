@@ -36,8 +36,8 @@ public class ChenHoSo extends JFrame {
 	Vector<String> ma;
 	Vector<String> tensv;
 	Vector<String> masvl;
-	SuaHoSo shs;
-	public ChenHoSo(SuaHoSo suaHoSo) {
+	Sua shs;
+	public ChenHoSo(Sua suaHoSo) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		JPanel contentPane = new JPanel();
@@ -128,8 +128,8 @@ public class ChenHoSo extends JFrame {
 						hoso h = new hoso(ngayvay,sotien,manh,masv);
 						statement1.executeUpdate("INSERT INTO `hoso` (`masv`, `manh`, `ngayvay`, `sotien`) VALUES ('"+h.getMasv()+"', '"+h.getManh()+"', '"+h.getNgayvay()+"', '"+h.getSotien()+"');");
 						statement1.close();
-						shs.reload();
-						shs.model.fireTableDataChanged();
+						shs.reloadHoSo();
+						shs.modelhs.fireTableDataChanged();
 						dispose();
 						JOptionPane.showMessageDialog(null, "Chèn thành công!");
 					} catch (MysqlDataTruncation e3) {

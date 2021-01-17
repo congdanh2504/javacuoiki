@@ -36,8 +36,8 @@ public class ChinhHoSo extends JFrame {
 	Vector<String> ma;
 	Vector<String> tensv;
 	Vector<String> masvl;
-	SuaHoSo shs;
-	public ChinhHoSo(String dngayvay, String dsotien, String dten,String dnganhang,SuaHoSo suaHoSo) {
+	Sua shs;
+	public ChinhHoSo(String dngayvay, String dsotien, String dten,String dnganhang,Sua suaHoSo) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		contentPane = new JPanel();
@@ -125,8 +125,8 @@ public class ChinhHoSo extends JFrame {
 						statement1.executeUpdate("UPDATE `hoso` set  ngayvay='"+h.getNgayvay()+"', sotien='"+h.getSotien()+"' "
 								+ "where manh='"+manh+"' AND masv='"+masv+"'");
 						statement1.close();
-						shs.reload();
-						shs.model.fireTableDataChanged();
+						shs.reloadHoSo();
+						shs.modelhs.fireTableDataChanged();
 						dispose();
 						JOptionPane.showMessageDialog(null, "Chèn thành công!");	
 					} catch (MysqlDataTruncation e3) {

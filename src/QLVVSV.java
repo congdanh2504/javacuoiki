@@ -78,18 +78,8 @@ public class QLVVSV extends JFrame {
 			btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 20));
 			btnCapNhat.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String list [] = {"Hồ sơ","Sinh Viên","Ngân hàng"};
-					int n = JOptionPane.showOptionDialog(null,"Chọn bảng cập nhật","Messeger",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,list,0);
-					if (n==0) {
-						dispose();
-						new SuaHoSo();
-					} else if (n==1) {
-						dispose();
-						new SuaSinhVien();
-					} else if (n==2) {
-						dispose();
-						new SuaNganHang();
-					}		
+					dispose();
+					new Sua();
 				}
 			});
 			btnCapNhat.setBounds(60, 300, 190, 70);

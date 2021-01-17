@@ -21,8 +21,8 @@ public class ChinhNganHang extends JFrame {
 	private JTextField textmanh;
 	private JTextField texttennh;
 	private JTextField textlaivay;
-	SuaNganHang snh;
-	public ChinhNganHang(String dma, String dten, String dlai, SuaNganHang suaNganHang) {
+	Sua snh;
+	public ChinhNganHang(String dma, String dten, String dlai, Sua suaNganHang) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		JPanel contentPane = new JPanel();
@@ -73,8 +73,8 @@ public class ChinhNganHang extends JFrame {
 						statement1.executeUpdate("UPDATE `nganhang` SET manh='"+nh.getManh()+"', tennganhang='"+nh.getTennganhang()+"', laixuat='"+nh.getLaivay()+"' "
 								+ "where manh='"+nh.getManh()+"'");
 						statement1.close();
-						snh.reload();
-						snh.model.fireTableDataChanged();
+						snh.reloadNganHang();
+						snh.modelnh.fireTableDataChanged();
 						dispose();
 						JOptionPane.showMessageDialog(null, "Sửa thành công!");
 					} catch(NumberFormatException e1) {

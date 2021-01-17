@@ -30,8 +30,8 @@ public class ChenSinhVien extends JFrame {
 	private JTextField textnganh;
 	private JTextField texttruong;
 	private JTextField textlop;
-	SuaSinhVien ssv;
-	public ChenSinhVien(SuaSinhVien sinhVien) {
+	Sua ssv;
+	public ChenSinhVien(Sua sinhVien) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		JPanel contentPane = new JPanel();
@@ -113,8 +113,8 @@ public class ChenSinhVien extends JFrame {
 						sinhvien s = new sinhvien(masv,hoten,ngaysinh,gioitinh,nganhhoc,lop,truong);
 						int check = statement1.executeUpdate("INSERT INTO `sinhvien` (`masv`, `hoten`, `ngaysinh`, `gioitinh`, `nganhhoc`, `lop`, `truong`) VALUES ('"+s.getMasv()+"', '"+s.getHoten()+"', '"+s.getNgaysinh()+"', '"+s.getGioitinh()+"', '"+s.getNganhhoc()+"', '"+s.getLop()+"', '"+s.getTruong()+"');");
 						statement1.close();
-						ssv.reload();
-						ssv.model.fireTableDataChanged();
+						ssv.reloadsv();
+						ssv.modelsv.fireTableDataChanged();
 						dispose();
 						JOptionPane.showMessageDialog(null, "Chèn thành công!");			
 					} catch (MysqlDataTruncation e3) {

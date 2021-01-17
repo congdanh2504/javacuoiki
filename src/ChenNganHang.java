@@ -26,8 +26,8 @@ public class ChenNganHang extends JFrame {
 	private JTextField textmanh;
 	private JTextField texttennh;
 	private JTextField textlaivay;
-	SuaNganHang snh;
-	public ChenNganHang(SuaNganHang suaNganHang) {
+	Sua snh;
+	public ChenNganHang(Sua suaNganHang) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		contentPane = new JPanel();
@@ -82,8 +82,8 @@ public class ChenNganHang extends JFrame {
 						nganhang nh = new nganhang(manh,tennh,laivay);			
 						statement1.executeUpdate("INSERT INTO `nganhang` (`manh`, `tennganhang`, `laixuat`) VALUES ('"+nh.getManh()+"', '"+nh.getTennganhang()+"', '"+nh.getLaivay()+"');");
 						statement1.close();
-						snh.reload();
-						snh.model.fireTableDataChanged();
+						snh.reloadNganHang();
+						snh.modelnh.fireTableDataChanged();
 						dispose();
 						JOptionPane.showMessageDialog(null, "Chèn thành công!");	
 					} catch (MySQLIntegrityConstraintViolationException e2) {

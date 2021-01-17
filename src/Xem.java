@@ -24,15 +24,12 @@ public class Xem extends JFrame {
 	Vector vData=null, vTitle=null;
 	public Xem() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(210, 100, 1000, 585);
 		JPanel contentPane;
 		try {
 			contentPane = new JPanelWithBackground("bluez.jpg");
-			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
-			contentPane.setLayout(null);	
+			contentPane.setLayout(new BorderLayout());	
 			JButton btnback = new JButton("Quay lại");
-			btnback.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnback.setForeground(new Color(255, 255, 255));
 			btnback.setBackground(new Color(64, 157, 250));
 			btnback.addActionListener(new ActionListener() {
@@ -42,12 +39,11 @@ public class Xem extends JFrame {
 				}
 			});
 			btnback.setFocusable(false);
-			btnback.setBounds(10, 10, 90, 25);
-			contentPane.add(btnback);	
-			JPanel panel = new JPanel();
-			panel.setBackground(Color.WHITE);
-			panel.setBounds(10, 45, 970, 490);
-			contentPane.add(panel);
+			JPanel pnback = new JPanel();
+			pnback.setLayout(new BorderLayout());
+			pnback.setBackground(new Color(64, 157, 250));
+			pnback.add(btnback, BorderLayout.WEST);	
+			contentPane.add(pnback, BorderLayout.NORTH);
 			dataConnection con = (dataConnection) new dataConnection();
 			Connection conn = con.ConnectDB();
 			try {
@@ -75,13 +71,13 @@ public class Xem extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			panel.setLayout(null);
 			JScrollPane tableresult = new JScrollPane(new JTable(vData,vTitle));
 			tableresult.setLocation(10, 10);
 			tableresult.setSize(950, 470);
-			panel.add(tableresult);
+			contentPane.add(tableresult, BorderLayout.CENTER);
 			setTitle("Xem");
-			setResizable(false);
+			setSize(1000,600);
+			setLocation(200,100);
 			setVisible(true);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
