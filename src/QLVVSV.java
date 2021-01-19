@@ -46,7 +46,7 @@ public class QLVVSV extends JFrame {
 			lbltitle.setHorizontalAlignment(SwingConstants.CENTER);
 			lbltitle.setBackground(new Color(255, 255, 255));
 			lbltitle.setForeground(new Color(255, 255, 255));
-			lbltitle.setFont(new Font("Serif", Font.BOLD, 35));
+			lbltitle.setFont(new Font("Tahoma", Font.BOLD, 30));
 			lbltitle.setBounds(100, 10, 585, 85);
 			panel.add(lbltitle);
 			JButton btnXem = new JButton("Xem", new ImageIcon("sea.png"));
@@ -89,8 +89,7 @@ public class QLVVSV extends JFrame {
 			btnThongKe.setForeground(new Color(255, 255, 255));
 			btnThongKe.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ThongKe();
-					new ThongKe2();
+					new Thongke();
 				}
 			});
 			btnThongKe.setBackground(new Color(64, 157, 250));

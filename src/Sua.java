@@ -170,7 +170,7 @@ public class Sua extends JFrame implements MouseListener{
 					// TODO Auto-generated method stub
 					try {
 						Vector st = (Vector) vDatah.elementAt(selectedRowhs);
-						new ChinhHoSo(st.get(2).toString(), st.get(3).toString(),st.get(0).toString(),st.get(1).toString(),Sua.this);
+						new ChinhHoSo(st.get(3).toString(), st.get(4).toString(),st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this);
 					} catch (ArrayIndexOutOfBoundsException e1) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");
 					}
@@ -385,19 +385,19 @@ public class Sua extends JFrame implements MouseListener{
 			tennh.clear();
 			tensv.clear();
 			statement = conn.createStatement();
-			resultSet = statement.executeQuery("select sinhvien.hoten as 'Ho ten', nganhang.tennganhang as 'Ten ngan hang', ngayvay as 'Ngay vay', sotien as 'So tien', hoso.masv, nganhang.manh "
+			resultSet = statement.executeQuery("select  hoso.masv as 'Ma sinh vien',sinhvien.hoten as 'Ho ten', nganhang.tennganhang as 'Ten ngan hang', ngayvay as 'Ngay vay', sotien as 'So tien', nganhang.manh "
 					+ "from hoso inner join sinhvien on hoso.masv = sinhvien.masv inner join nganhang on nganhang.manh=hoso.manh");
 			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-			for (int i=1;i<=4;i++) {
+			for (int i=1;i<=5;i++) {
 				vTitleh.add(resultSetMetaData.getColumnLabel(i));
 			}
 			while (resultSet.next()) {
-				Vector row = new Vector(4);
-				tensv.add(resultSet.getString(1));
-				tennh.add(resultSet.getString(2));
-				masv.add(resultSet.getString(5));
+				Vector row = new Vector(5);
+				tensv.add(resultSet.getString(2));
+				tennh.add(resultSet.getString(3));
+				masv.add(resultSet.getString(1));
 				manh.add(resultSet.getString(6));
-				for (int i=1;i<=4;i++) {
+				for (int i=1;i<=5;i++) {
 					row.add(resultSet.getString(i));
 				}
 				vDatah.add(row);

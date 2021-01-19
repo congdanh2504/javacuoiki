@@ -37,7 +37,7 @@ public class ChinhHoSo extends JFrame {
 	Vector<String> tensv;
 	Vector<String> masvl;
 	Sua shs;
-	public ChinhHoSo(String dngayvay, String dsotien, String dten,String dnganhang,Sua suaHoSo) {
+	public ChinhHoSo(String dngayvay, String dsotien, String dmasv,String dten,String dnganhang,Sua suaHoSo) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		contentPane = new JPanel();
@@ -104,7 +104,7 @@ public class ChinhHoSo extends JFrame {
 		}
 		textngayvay.setText(dngayvay);
 		textsotien.setText(dsotien);
-		comboxTen.addItem(dten);;
+		comboxTen.addItem(dmasv+"- "+dten);;
 		comboBox.addItem(dnganhang);;
 		JButton btnok = new JButton("OK");
 		btnok.addActionListener(new ActionListener() {

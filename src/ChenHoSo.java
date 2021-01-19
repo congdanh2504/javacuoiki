@@ -34,8 +34,6 @@ public class ChenHoSo extends JFrame {
 	private JTextField textsotien;
 	Vector<String> ten;
 	Vector<String> ma;
-	Vector<String> tensv;
-	Vector<String> masvl;
 	Sua shs;
 	public ChenHoSo(Sua suaHoSo) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,8 +82,6 @@ public class ChenHoSo extends JFrame {
 		Connection conn = con.ConnectDB();
 		ten = new Vector<String>();
 		ma = new Vector<String>();
-		tensv = new Vector<String>();
-		masvl = new Vector<String>();
 		try {
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM nganhang");
@@ -96,9 +92,7 @@ public class ChenHoSo extends JFrame {
 			}
 			rs = statement.executeQuery("SELECT * FROM sinhvien");
 			while (rs.next()) {
-				tensv.add(rs.getString(2));
-				masvl.add(rs.getString(1));
-				comboxTen.addItem(rs.getString(2));
+				comboxTen.addItem(rs.getString(1)+"- "+rs.getString(2));
 			}
 			statement.close();
 			rs.close();
@@ -117,9 +111,8 @@ public class ChenHoSo extends JFrame {
 				String tensinhvien= comboxTen.getSelectedItem().toString();
 				int index = ten.indexOf(tennganhang);
 				String manh = ma.get(index);
-				int indexten = tensv.indexOf(tensinhvien);
-				String masv = masvl.get(indexten);
-				if (ngayvay.equals("") || sotien.equals("") || tennganhang.equals("") || tensinhvien.equals("")) {
+				String masv = tensinhvien.substring(0,tensinhvien.indexOf('-'));
+				if (ngayvay.equals("") || sotien.equals("")) {
 					JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
 				} else {
 					try {
