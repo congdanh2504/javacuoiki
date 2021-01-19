@@ -89,6 +89,7 @@ public class QLVVSV extends JFrame {
 			btnThongKe.setForeground(new Color(255, 255, 255));
 			btnThongKe.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					dispose();
 					new Thongke();
 				}
 			});
