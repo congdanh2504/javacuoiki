@@ -32,8 +32,9 @@ public class Timkiem extends JFrame {
 	private JPanel contentPane;
 	private JTextField nhapten;
 	DefaultTableModel model;
-	JScrollPane tableresult = new JScrollPane();
-	int count=1000;
+	dataConnection con;
+	JScrollPane tableresult;
+	Connection conn ;
 	Vector vData=null, vTitle=null;
     public String Standardized(String str) {
     	str = str.trim();
@@ -52,7 +53,7 @@ public class Timkiem extends JFrame {
 		try {
 			contentPane = new JPanelWithBackground("bluez.jpg");
 			setContentPane(contentPane);
-			contentPane.add(tableresult);
+			//contentPane.add(tableresult);
 			contentPane.setLayout(new BorderLayout());
 			JButton btnback = new JButton("Quay lại", new ImageIcon("back.png"));
 			btnback.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -70,7 +71,36 @@ public class Timkiem extends JFrame {
 				}
 			});
 			btnback.setFocusable(false);
-			//contentPane.add(btnback, BorderLayout.NORTH);
+			con = (dataConnection) new dataConnection();
+			conn = con.ConnectDB();
+			try {
+				Statement sta = conn.createStatement();
+				Statement statement = conn.createStatement();
+				ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
+						+ "inner join hoso on hoso.masv = sinhvien.masv inner join nganhang on nganhang.manh = hoso.manh "
+						+ "order by sinhvien.hoten");
+				ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+				int num_colum = resultSetMetaData.getColumnCount();
+				vTitle = new Vector(num_colum);
+				for (int i=1;i<=num_colum;i++) {
+					vTitle.add(resultSetMetaData.getColumnLabel(i));
+				}
+				vData = new Vector();
+				while (resultSet.next()) {
+					Vector row = new Vector(num_colum);
+					for (int i=1;i<=num_colum;i++) {
+						row.add(resultSet.getString(i));
+					}
+					vData.add(row);
+				}
+				resultSet.close();
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			tableresult = new JScrollPane(new JTable(vData,vTitle));
+			contentPane.add(tableresult, BorderLayout.CENTER);
 			JPanel jPanel = new JPanelWithBackground("bluez.jpg");
 			contentPane.add(jPanel, BorderLayout.SOUTH);
 			jPanel.setLayout(new FlowLayout());
@@ -153,19 +183,13 @@ public class Timkiem extends JFrame {
 					}
 					vData.add(row);
 				}
-				
 				resultSet.close();
 				statement.close();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}	
-			contentPane.remove(tableresult);
-			model = new DefaultTableModel(vData,vTitle);
-			if (count%2==0) count++; else count--;
-			tableresult = new JScrollPane(new JTable(model));
-			contentPane.add(tableresult, BorderLayout.CENTER);	
-			setSize(count,600);
+			}		
+			tableresult.setViewportView(new JTable(vData,vTitle));
 			JOptionPane.showMessageDialog(null, "Tìm thấy "+vData.size()+" kết quả");
 		}
 	}

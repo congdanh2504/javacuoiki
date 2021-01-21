@@ -28,13 +28,10 @@ import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
-public class Sua extends JFrame implements MouseListener{
+public class Sua extends JFrame{
 	Vector vDatas=new Vector(), vTitles=new Vector();
 	Vector vDatah=new Vector(), vTitleh=new Vector();
 	Vector vDatan=new Vector(), vTitlen=new Vector();
-	int selectedRowsv=0;
-	int selectedRowhs=0;
-	int selectedRownh=0;
 	JTable tbsv ;
 	JTable tbhs;
 	JTable tbnh;
@@ -98,7 +95,7 @@ public class Sua extends JFrame implements MouseListener{
 					// TODO Auto-generated method stub
 					//System.out.println(selectedRowsv);
 					try {
-						Vector st = (Vector) vDatas.elementAt(selectedRowsv);	
+						Vector st = (Vector) vDatas.elementAt(tbsv.getSelectedRow());	
 						new ChinhSinhVien(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),st.get(3).toString(),st.get(4).toString(),st.get(5).toString(),st.get(6).toString(),Sua.this,1);	
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");
@@ -120,11 +117,11 @@ public class Sua extends JFrame implements MouseListener{
 					int n = JOptionPane.showOptionDialog(null,"Bạn có muốn xóa","Messeger",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,list,0);
 					if (n==0) {	
 						try {
-							Vector st = (Vector) vDatas.elementAt(selectedRowsv);
+							Vector st = (Vector) vDatas.elementAt(tbsv.getSelectedRow());
 							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							statement.executeUpdate("Delete from sinhvien where masv = '"+st.elementAt(0)+"'");
-							vDatas.remove(selectedRowsv);
+							vDatas.remove(tbsv.getSelectedRow());
 							modelsv.fireTableDataChanged();
 							statement.close();
 							JOptionPane.showMessageDialog(null, "Xóa thành công!");
@@ -169,7 +166,7 @@ public class Sua extends JFrame implements MouseListener{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					try {
-						Vector st = (Vector) vDatah.elementAt(selectedRowhs);
+						Vector st = (Vector) vDatah.elementAt(tbhs.getSelectedRow());
 						new ChinhHoSo(st.get(3).toString(), st.get(4).toString(),st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this,1);
 					} catch (ArrayIndexOutOfBoundsException e1) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");
@@ -191,15 +188,13 @@ public class Sua extends JFrame implements MouseListener{
 					int n = JOptionPane.showOptionDialog(null,"Bạn có muốn xóa","Messeger",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,list,0);
 					if (n==0) {	
 						try {
-							
-							Vector st = (Vector) vDatah.elementAt(selectedRowhs);
-					
+							Vector st = (Vector) vDatah.elementAt(tbhs.getSelectedRow());
 							String smasv = masv.get(tensv.indexOf(st.elementAt(1)));
 							String smanh = manh.get(tennh.indexOf(st.elementAt(2)));
 							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							int check = statement.executeUpdate("Delete from hoso where masv= '"+smasv+"' and manh= '"+smanh+"'");
-							vDatah.remove(selectedRowhs);
+							vDatah.remove(tbhs.getSelectedRow());
 							modelhs.fireTableDataChanged();
 							statement.close();
 							if (check == 1) {
@@ -246,7 +241,7 @@ public class Sua extends JFrame implements MouseListener{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					try {
-						Vector st = (Vector) vDatan.elementAt(selectedRownh);
+						Vector st = (Vector) vDatan.elementAt(tbnh.getSelectedRow());
 						new ChinhNganHang(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this,1);
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");	
@@ -267,11 +262,11 @@ public class Sua extends JFrame implements MouseListener{
 					int n = JOptionPane.showOptionDialog(null,"Bạn có muốn xóa","Messeger",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,list,0);
 					if (n==0) {
 						try {
-							Vector st = (Vector) vDatan.elementAt(selectedRownh);
+							Vector st = (Vector) vDatan.elementAt(tbnh.getSelectedRow());
 							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							statement.executeUpdate("Delete from nganhang where manh= '"+st.elementAt(0)+"'");
-							vDatan.remove(selectedRownh);
+							vDatan.remove(tbnh.getSelectedRow());
 							modelnh.fireTableDataChanged();
 							statement.close();
 							JOptionPane.showMessageDialog(null, "Xóa thành công!");
@@ -306,21 +301,16 @@ public class Sua extends JFrame implements MouseListener{
 			reloadsv();
 			modelsv = new DefaultTableModel(vDatas,vTitles);
 			tbsv = new JTable(modelsv);
-			tbsv.addMouseListener(this);
 			JScrollPane tableresult = new JScrollPane(tbsv);
 			sinhVien.add(tableresult);
-			
 			reloadHoSo();
 			modelhs = new DefaultTableModel(vDatah,vTitleh);
 			tbhs = new JTable(modelhs);
-			tbhs.addMouseListener(this);
 			tableresult = new JScrollPane(tbhs);
 			hoSo.add(tableresult);	
-			
 			reloadNganHang();
 			modelnh = new DefaultTableModel(vDatan,vTitlen);
 			tbnh = new JTable(modelnh);
-			tbnh.addMouseListener(this);
 			tableresult = new JScrollPane(tbnh);
 			nganHang.add(tableresult);	
 			setSize(1000,600);
@@ -413,31 +403,5 @@ public class Sua extends JFrame implements MouseListener{
 			JOptionPane.showMessageDialog(null, "Lỗi");
 		}
 	}
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		selectedRowsv=tbsv.getSelectedRow();
-		selectedRowhs=tbhs.getSelectedRow();
-		selectedRownh=tbnh.getSelectedRow();
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+
 }
