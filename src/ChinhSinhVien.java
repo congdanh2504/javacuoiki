@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.MysqlDataTruncation;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,10 +32,12 @@ public class ChinhSinhVien extends JFrame {
 	private JTextField textnganh;
 	private JTextField texttruong;
 	private JTextField textlop;
+	int check;
 	Sua ssv;
-	public ChinhSinhVien(String dmasv, String dhoten, String dngaysinh, String dgioitinh, String dnganh, String dlop, String dtruong, Sua sinhVien) {
+	public ChinhSinhVien(String dmasv, String dhoten, String dngaysinh, String dgioitinh, String dnganh, String dlop, String dtruong, Sua sinhVien, int n) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
+		check =n;
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(64, 157, 250));
 		setContentPane(contentPane);
@@ -91,7 +94,9 @@ public class ChinhSinhVien extends JFrame {
 		contentPane.add(textlop);
 		textlop.setColumns(10);
 		textmasv.setText(dmasv);
-		textmasv.setEditable(false);
+		if (check==1) {
+			textmasv.setEditable(false);
+		}
 		textlop.setText(dlop);
 		textnganh.setText(dnganh);
 		texttruong.setText(dtruong);
@@ -107,27 +112,53 @@ public class ChinhSinhVien extends JFrame {
 				String nganhhoc = textnganh.getText();
 				String lop = textlop.getText();
 				String truong = texttruong.getText();
-				if (hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
-					JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+				if (check == 1) {
+					if (hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+					} else {
+						try {
+							dataConnection con = (dataConnection) new dataConnection();
+							Connection conn = con.ConnectDB();
+							Statement statement1 = conn.createStatement();
+							sinhvien s = new sinhvien(masv,hoten,ngaysinh,gioitinh,nganhhoc,lop,truong);
+							statement1.executeUpdate("UPDATE `sinhvien` set hoten='"+s.getHoten()+"', ngaysinh='"+s.getNgaysinh()+"', gioitinh='"+s.getGioitinh()+"', nganhhoc='"+s.getNganhhoc()+"', lop='"+s.getLop()+"', truong='"+s.getTruong()+"' "
+									+ "where masv='"+s.getMasv()+"'");
+							statement1.close();
+							ssv.reloadsv();
+							ssv.modelsv.fireTableDataChanged();
+							dispose();
+							JOptionPane.showMessageDialog(null, "Sửa thành công!");
+						}	catch (MysqlDataTruncation e3) {
+							JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
+						}		
+					}
 				} else {
-					try {
-						dataConnection con = (dataConnection) new dataConnection();
-						Connection conn = con.ConnectDB();
-						Statement statement1 = conn.createStatement();
-						sinhvien s = new sinhvien(masv,hoten,ngaysinh,gioitinh,nganhhoc,lop,truong);
-						statement1.executeUpdate("UPDATE `sinhvien` set hoten='"+s.getHoten()+"', ngaysinh='"+s.getNgaysinh()+"', gioitinh='"+s.getGioitinh()+"', nganhhoc='"+s.getNganhhoc()+"', lop='"+s.getLop()+"', truong='"+s.getTruong()+"' "
-								+ "where masv='"+s.getMasv()+"'");
-						statement1.close();
-						ssv.reloadsv();
-						ssv.modelsv.fireTableDataChanged();
-						dispose();
-						JOptionPane.showMessageDialog(null, "Sửa thành công!");
-					}	catch (MysqlDataTruncation e3) {
-						JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
-					}		
+					if (masv.equals("") || hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+					} else {
+						try {
+							dataConnection con = (dataConnection) new dataConnection();
+							Connection conn = con.ConnectDB();
+							Statement statement1 = conn.createStatement();	
+							sinhvien s = new sinhvien(masv,hoten,ngaysinh,gioitinh,nganhhoc,lop,truong);
+							int check = statement1.executeUpdate("INSERT INTO `sinhvien` (`masv`, `hoten`, `ngaysinh`, `gioitinh`, `nganhhoc`, `lop`, `truong`) VALUES ('"+s.getMasv()+"', '"+s.getHoten()+"', '"+s.getNgaysinh()+"', '"+s.getGioitinh()+"', '"+s.getNganhhoc()+"', '"+s.getLop()+"', '"+s.getTruong()+"');");
+							statement1.close();
+							ssv.reloadsv();
+							ssv.modelsv.fireTableDataChanged();
+							dispose();
+							JOptionPane.showMessageDialog(null, "Chèn thành công!");			
+						} catch (MysqlDataTruncation e3) {
+							JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
+						} catch (MySQLIntegrityConstraintViolationException e2) {
+							JOptionPane.showMessageDialog(null, "Mỗi sinh viên chỉ có một mã");
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");			
+						}
+					}
 				}
+				
 			}
 		});
 		btnok.setFont(new Font("Tahoma", Font.BOLD, 15));

@@ -99,7 +99,7 @@ public class Sua extends JFrame implements MouseListener{
 					//System.out.println(selectedRowsv);
 					try {
 						Vector st = (Vector) vDatas.elementAt(selectedRowsv);	
-						new ChinhSinhVien(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),st.get(3).toString(),st.get(4).toString(),st.get(5).toString(),st.get(6).toString(),Sua.this);	
+						new ChinhSinhVien(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),st.get(3).toString(),st.get(4).toString(),st.get(5).toString(),st.get(6).toString(),Sua.this,1);	
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");
 					}	
@@ -149,7 +149,7 @@ public class Sua extends JFrame implements MouseListener{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					new ChenSinhVien(Sua.this);
+					new ChinhSinhVien("","","","","","","",Sua.this,2);
 				}
 			});
 			JPanel sinhVienC = new JPanel();
@@ -170,7 +170,7 @@ public class Sua extends JFrame implements MouseListener{
 					// TODO Auto-generated method stub
 					try {
 						Vector st = (Vector) vDatah.elementAt(selectedRowhs);
-						new ChinhHoSo(st.get(3).toString(), st.get(4).toString(),st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this);
+						new ChinhHoSo(st.get(3).toString(), st.get(4).toString(),st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this,1);
 					} catch (ArrayIndexOutOfBoundsException e1) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");
 					}
@@ -187,12 +187,15 @@ public class Sua extends JFrame implements MouseListener{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					String []list = {"Có","Không"};
+					
 					int n = JOptionPane.showOptionDialog(null,"Bạn có muốn xóa","Messeger",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,list,0);
 					if (n==0) {	
 						try {
+							
 							Vector st = (Vector) vDatah.elementAt(selectedRowhs);
-							String smasv = masv.get(tensv.indexOf(st.elementAt(0)));
-							String smanh = manh.get(tennh.indexOf(st.elementAt(1)));
+					
+							String smasv = masv.get(tensv.indexOf(st.elementAt(1)));
+							String smanh = manh.get(tennh.indexOf(st.elementAt(2)));
 							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							int check = statement.executeUpdate("Delete from hoso where masv= '"+smasv+"' and manh= '"+smanh+"'");
@@ -209,6 +212,7 @@ public class Sua extends JFrame implements MouseListener{
 						} catch (SQLException e1) {
 							JOptionPane.showMessageDialog(null, "Lỗi khi xóa");
 						}
+							
 					}
 				}
 			});
@@ -221,7 +225,7 @@ public class Sua extends JFrame implements MouseListener{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					new ChenHoSo(Sua.this);
+					new ChinhHoSo("","","","","",Sua.this,2);
 				}
 			});
 			hoSom.add(hChen);
@@ -243,7 +247,7 @@ public class Sua extends JFrame implements MouseListener{
 					// TODO Auto-generated method stub
 					try {
 						Vector st = (Vector) vDatan.elementAt(selectedRownh);
-						new ChinhNganHang(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this);
+						new ChinhNganHang(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),Sua.this,1);
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");	
 					}
@@ -290,7 +294,7 @@ public class Sua extends JFrame implements MouseListener{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					new ChenNganHang(Sua.this);
+					new ChinhNganHang("","","",Sua.this,2);
 				}
 			});
 			nganHangm.add(nChen);
@@ -394,9 +398,11 @@ public class Sua extends JFrame implements MouseListener{
 			while (resultSet.next()) {
 				Vector row = new Vector(5);
 				tensv.add(resultSet.getString(2));
-				tennh.add(resultSet.getString(3));
 				masv.add(resultSet.getString(1));
-				manh.add(resultSet.getString(6));
+				if (tennh.indexOf(resultSet.getString(3))==-1) {
+					tennh.add(resultSet.getString(3));	
+					manh.add(resultSet.getString(6));
+				}
 				for (int i=1;i<=5;i++) {
 					row.add(resultSet.getString(i));
 				}

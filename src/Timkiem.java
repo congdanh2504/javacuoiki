@@ -32,7 +32,7 @@ public class Timkiem extends JFrame {
 	private JPanel contentPane;
 	private JTextField nhapten;
 	DefaultTableModel model;
-	JScrollPane tableresult;
+	JScrollPane tableresult = new JScrollPane();
 	int count=1000;
 	Vector vData=null, vTitle=null;
     public String Standardized(String str) {
@@ -52,6 +52,7 @@ public class Timkiem extends JFrame {
 		try {
 			contentPane = new JPanelWithBackground("bluez.jpg");
 			setContentPane(contentPane);
+			contentPane.add(tableresult);
 			contentPane.setLayout(new BorderLayout());
 			JButton btnback = new JButton("Quay lại", new ImageIcon("back.png"));
 			btnback.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -97,7 +98,7 @@ public class Timkiem extends JFrame {
 				}
 			});
 			nhapten.setColumns(10);
-			JLabel lblnhap = new JLabel("Nhập mã sinh viên hoặc tên:");
+			JLabel lblnhap = new JLabel("Nhập mã sinh viên, tên hoặc ngày:");
 			lblnhap.setForeground(Color.WHITE);
 			lblnhap.setFont(new Font("Tahoma", Font.BOLD, 21));
 			jPanel.add(lblnhap);
@@ -136,7 +137,7 @@ public class Timkiem extends JFrame {
 				
 				ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
 						+ "inner join hoso on hoso.masv = sinhvien.masv inner join nganhang on nganhang.manh = hoso.manh "
-						+ "where sinhvien.masv like '%"+ten+"%' or hoten like '%"+ten+"%'");
+						+ "where sinhvien.masv = '"+ten+"' or hoten like '%"+ten+"' or ngayvay = '"+ten+"'");
 				
 				ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 				int num_colum = resultSetMetaData.getColumnCount();
@@ -158,11 +159,10 @@ public class Timkiem extends JFrame {
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-			if (count!=1000)	
-				contentPane.remove(tableresult);
+			}	
+			contentPane.remove(tableresult);
 			model = new DefaultTableModel(vData,vTitle);
-			count+=1;
+			if (count%2==0) count++; else count--;
 			tableresult = new JScrollPane(new JTable(model));
 			contentPane.add(tableresult, BorderLayout.CENTER);	
 			setSize(count,600);
@@ -170,3 +170,4 @@ public class Timkiem extends JFrame {
 		}
 	}
 }
+

@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -22,8 +25,10 @@ public class ChinhNganHang extends JFrame {
 	private JTextField texttennh;
 	private JTextField textlaivay;
 	Sua snh;
-	public ChinhNganHang(String dma, String dten, String dlai, Sua suaNganHang) {
+	int check;
+	public ChinhNganHang(String dma, String dten, String dlai, Sua suaNganHang, int n) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		check = n;
 		setBounds(880, 180, 320, 325);
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(64, 157, 250));
@@ -52,7 +57,9 @@ public class ChinhNganHang extends JFrame {
 		contentPane.add(textlaivay);
 		textlaivay.setColumns(10);
 		textmanh.setText(dma);
-		textmanh.setEditable(false);
+		if (check==1) {
+			textmanh.setEditable(false);
+		}
 		texttennh.setText(dten);
 		textlaivay.setText(dlai);
 		JButton btnok = new JButton("OK");
@@ -60,28 +67,55 @@ public class ChinhNganHang extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String manh = textmanh.getText();
 				String tennh = texttennh.getText();
-				String laivay = textlaivay.getText();
-				if(laivay.equals("") || tennh.equals("")) {
-					JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+				String laivay = textlaivay.getText();	
+				if (check==1) {	
+					if(laivay.equals("") || tennh.equals("")) {
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+					} else {
+						try {
+							Double.parseDouble(laivay);
+							dataConnection con = (dataConnection) new dataConnection();
+							Connection conn = con.ConnectDB();
+							Statement statement1 = conn.createStatement();
+							nganhang nh = new nganhang(manh,tennh,laivay);
+							statement1.executeUpdate("UPDATE `nganhang` SET manh='"+nh.getManh()+"', tennganhang='"+nh.getTennganhang()+"', laixuat='"+nh.getLaivay()+"' "
+									+ "where manh='"+nh.getManh()+"'");
+							statement1.close();
+							snh.reloadNganHang();
+							snh.modelnh.fireTableDataChanged();
+							dispose();
+							JOptionPane.showMessageDialog(null, "Sửa thành công!");
+						} catch(NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null, "Nhập tiền lãi là một số");
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");	
+						}		
+					}
+
 				} else {
-					try {
-						Double.parseDouble(laivay);
-						dataConnection con = (dataConnection) new dataConnection();
-						Connection conn = con.ConnectDB();
-						Statement statement1 = conn.createStatement();
-						nganhang nh = new nganhang(manh,tennh,laivay);
-						statement1.executeUpdate("UPDATE `nganhang` SET manh='"+nh.getManh()+"', tennganhang='"+nh.getTennganhang()+"', laixuat='"+nh.getLaivay()+"' "
-								+ "where manh='"+nh.getManh()+"'");
-						statement1.close();
-						snh.reloadNganHang();
-						snh.modelnh.fireTableDataChanged();
-						dispose();
-						JOptionPane.showMessageDialog(null, "Sửa thành công!");
-					} catch(NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null, "Nhập tiền lãi là một số");
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");	
-					}		
+					if(manh.equals("") || laivay.equals("") || tennh.equals("")) {
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+					} else {
+						try {	
+							Double.parseDouble(laivay);
+							dataConnection con = (dataConnection) new dataConnection();
+							Connection conn = con.ConnectDB();
+							Statement statement1 = conn.createStatement();
+							nganhang nh = new nganhang(manh,tennh,laivay);			
+							statement1.executeUpdate("INSERT INTO `nganhang` (`manh`, `tennganhang`, `laixuat`) VALUES ('"+nh.getManh()+"', '"+nh.getTennganhang()+"', '"+nh.getLaivay()+"');");
+							statement1.close();
+							snh.reloadNganHang();
+							snh.modelnh.fireTableDataChanged();
+							dispose();
+							JOptionPane.showMessageDialog(null, "Chèn thành công!");	
+						} catch (MySQLIntegrityConstraintViolationException e2) {
+							JOptionPane.showMessageDialog(null, "Không được trùng mã ngân hàng");
+						} catch (NumberFormatException e3) {
+							JOptionPane.showMessageDialog(null, "Nhập tiền lãi là một số");				
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
+						}				
+					}
 				}
 			}	
 		});
