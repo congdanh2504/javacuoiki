@@ -2,14 +2,14 @@
 public class sinhvien {
 	private String masv;
 	private String hoten;
-	private String ngaysinh;
+	private java.sql.Date ngaysinh;
 	private String gioitinh;
 	private String nganhhoc;
 	private String lop;
 	private String truong;
 	private hoso hoso;
 	
-	public sinhvien(String masv, String hoten, String ngaysinh, String gioitinh, String nganhhoc, String lop,
+	public sinhvien(String masv, String hoten, java.sql.Date ngaysinh, String gioitinh, String nganhhoc, String lop,
 			String truong) {
 		super();
 		this.masv = masv;
@@ -21,7 +21,7 @@ public class sinhvien {
 		this.truong = truong;
 	}
 
-	public sinhvien(String masv, String hoten, String ngaysinh, String gioitinh, String nganhhoc, String lop,
+	public sinhvien(String masv, String hoten, java.sql.Date ngaysinh, String gioitinh, String nganhhoc, String lop,
 			String truong, hoso hoso) {
 		super();
 		this.masv = masv;
@@ -46,10 +46,10 @@ public class sinhvien {
 	public void setHoten(String hoten) {
 		this.hoten = hoten;
 	}
-	public String getNgaysinh() {
+	public java.sql.Date getNgaysinh() {
 		return ngaysinh;
 	}
-	public void setNgaysinh(String ngaysinh) {
+	public void setNgaysinh(java.sql.Date ngaysinh) {
 		this.ngaysinh = ngaysinh;
 	}
 	

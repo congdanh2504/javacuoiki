@@ -1,12 +1,10 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,7 +24,6 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
-import javax.swing.UIManager;
 
 public class Timkiem extends JFrame {
 	private JPanel contentPane;
@@ -53,7 +50,6 @@ public class Timkiem extends JFrame {
 		try {
 			contentPane = new JPanelWithBackground("bluez.jpg");
 			setContentPane(contentPane);
-			//contentPane.add(tableresult);
 			contentPane.setLayout(new BorderLayout());
 			JButton btnback = new JButton("Quay lại", new ImageIcon("back.png"));
 			btnback.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -74,7 +70,6 @@ public class Timkiem extends JFrame {
 			con = (dataConnection) new dataConnection();
 			conn = con.ConnectDB();
 			try {
-				Statement sta = conn.createStatement();
 				Statement statement = conn.createStatement();
 				ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
 						+ "inner join hoso on hoso.masv = sinhvien.masv inner join nganhang on nganhang.manh = hoso.manh "
@@ -162,7 +157,6 @@ public class Timkiem extends JFrame {
 			dataConnection con = (dataConnection) new dataConnection();
 			Connection conn = con.ConnectDB();
 			try {
-				Statement sta = conn.createStatement();
 				Statement statement = conn.createStatement();
 				
 				ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "

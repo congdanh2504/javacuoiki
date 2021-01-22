@@ -22,6 +22,8 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
 public class ChinhSinhVien extends JFrame {
@@ -108,55 +110,56 @@ public class ChinhSinhVien extends JFrame {
 				String masv = textmasv.getText();
 				String hoten = textten.getText();
 				String ngaysinh= textngaysinh.getText();
-				String gioitinh = cbgioitinh.getSelectedItem().toString();
-				String nganhhoc = textnganh.getText();
-				String lop = textlop.getText();
-				String truong = texttruong.getText();
-				if (check == 1) {
-					if (hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
-						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+				try {
+					final java.sql.Date date = new ConvertDate(ngaysinh).convert();
+					String gioitinh = cbgioitinh.getSelectedItem().toString();
+					String nganhhoc = textnganh.getText();
+					String lop = textlop.getText();
+					String truong = texttruong.getText();
+					if (check == 1) {
+						if (hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+						} else {
+							try {
+								dataConnection con = (dataConnection) new dataConnection();
+								Connection conn = con.ConnectDB();
+								Statement statement1 = conn.createStatement();
+								sinhvien s = new sinhvien(masv,hoten,date,gioitinh,nganhhoc,lop,truong);
+								statement1.executeUpdate("UPDATE `sinhvien` set hoten='"+s.getHoten()+"', ngaysinh='"+s.getNgaysinh()+"', gioitinh='"+s.getGioitinh()+"', nganhhoc='"+s.getNganhhoc()+"', lop='"+s.getLop()+"', truong='"+s.getTruong()+"' "
+										+ "where masv='"+s.getMasv()+"'");
+								statement1.close();
+								ssv.reloadsv();
+								ssv.modelsv.fireTableDataChanged();
+								dispose();
+								JOptionPane.showMessageDialog(null, "Sửa thành công!");
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
+							}		
+						}
 					} else {
-						try {
-							dataConnection con = (dataConnection) new dataConnection();
-							Connection conn = con.ConnectDB();
-							Statement statement1 = conn.createStatement();
-							sinhvien s = new sinhvien(masv,hoten,ngaysinh,gioitinh,nganhhoc,lop,truong);
-							statement1.executeUpdate("UPDATE `sinhvien` set hoten='"+s.getHoten()+"', ngaysinh='"+s.getNgaysinh()+"', gioitinh='"+s.getGioitinh()+"', nganhhoc='"+s.getNganhhoc()+"', lop='"+s.getLop()+"', truong='"+s.getTruong()+"' "
-									+ "where masv='"+s.getMasv()+"'");
-							statement1.close();
-							ssv.reloadsv();
-							ssv.modelsv.fireTableDataChanged();
-							dispose();
-							JOptionPane.showMessageDialog(null, "Sửa thành công!");
-						}	catch (MysqlDataTruncation e3) {
-							JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
-						}		
-					}
-				} else {
-					if (masv.equals("") || hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
-						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
-					} else {
-						try {
-							dataConnection con = (dataConnection) new dataConnection();
-							Connection conn = con.ConnectDB();
-							Statement statement1 = conn.createStatement();	
-							sinhvien s = new sinhvien(masv,hoten,ngaysinh,gioitinh,nganhhoc,lop,truong);
-							int check = statement1.executeUpdate("INSERT INTO `sinhvien` (`masv`, `hoten`, `ngaysinh`, `gioitinh`, `nganhhoc`, `lop`, `truong`) VALUES ('"+s.getMasv()+"', '"+s.getHoten()+"', '"+s.getNgaysinh()+"', '"+s.getGioitinh()+"', '"+s.getNganhhoc()+"', '"+s.getLop()+"', '"+s.getTruong()+"');");
-							statement1.close();
-							ssv.reloadsv();
-							ssv.modelsv.fireTableDataChanged();
-							dispose();
-							JOptionPane.showMessageDialog(null, "Chèn thành công!");			
-						} catch (MysqlDataTruncation e3) {
-							JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
-						} catch (MySQLIntegrityConstraintViolationException e2) {
-							JOptionPane.showMessageDialog(null, "Mỗi sinh viên chỉ có một mã");
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");			
+						if (masv.equals("") || hoten.equals("") || ngaysinh.equals("") || nganhhoc.equals("") || lop.equals("") || truong.equals("")) {
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+						} else {
+							try {
+								dataConnection con = (dataConnection) new dataConnection();
+								Connection conn = con.ConnectDB();
+								Statement statement1 = conn.createStatement();	
+								sinhvien s = new sinhvien(masv,hoten,date,gioitinh,nganhhoc,lop,truong);
+								int check = statement1.executeUpdate("INSERT INTO `sinhvien` (`masv`, `hoten`, `ngaysinh`, `gioitinh`, `nganhhoc`, `lop`, `truong`) VALUES ('"+s.getMasv()+"', '"+s.getHoten()+"', '"+s.getNgaysinh()+"', '"+s.getGioitinh()+"', '"+s.getNganhhoc()+"', '"+s.getLop()+"', '"+s.getTruong()+"');");
+								statement1.close();
+								ssv.reloadsv();
+								ssv.modelsv.fireTableDataChanged();
+								dispose();
+								JOptionPane.showMessageDialog(null, "Chèn thành công!");			
+							} catch (MySQLIntegrityConstraintViolationException e2) {
+								JOptionPane.showMessageDialog(null, "Mỗi sinh viên chỉ có một mã");
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");			
+							}
 						}
 					}
+				} catch (ParseException e4) {
+					JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
 				}
 				
 			}

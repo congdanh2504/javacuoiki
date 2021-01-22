@@ -25,7 +25,6 @@ public class QLVVSV extends JFrame {
 	public static void main(String[] args) {
 			new QLVVSV();
 	}
-
 	public QLVVSV() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(280, 120, 800, 550);

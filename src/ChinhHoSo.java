@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -138,66 +139,66 @@ public class ChinhHoSo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String ngayvay = textngayvay.getText();
 				String sotien = textsotien.getText();
-				if (check==1) {
-					int index = ten.indexOf(dnganhang);
-					String manh = ma.get(index);
-					int indexten = tensv.indexOf(dten);
-					String masv = masvl.get(indexten);	
-					if (ngayvay.equals("") || sotien.equals("")) {
-						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+				try {
+					final java.sql.Date date = new ConvertDate(ngayvay).convert();
+					if (check==1) {
+						int index = ten.indexOf(dnganhang);
+						String manh = ma.get(index);
+						int indexten = tensv.indexOf(dten);
+						String masv = masvl.get(indexten);	
+						if (ngayvay.equals("") || sotien.equals("")) {
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+						} else {
+							try {
+								Double.parseDouble(sotien);
+								Statement statement1 = conn.createStatement();
+								hoso h = new hoso(date,sotien,manh,masv);
+								statement1.executeUpdate("UPDATE `hoso` set  ngayvay='"+h.getNgayvay()+"', sotien='"+h.getSotien()+"' "
+										+ "where manh='"+manh+"' AND masv='"+masv+"'");
+								statement1.close();
+								shs.reloadHoSo();
+								shs.modelhs.fireTableDataChanged();
+								dispose();
+								JOptionPane.showMessageDialog(null, "Sửa thành công!");	
+							} catch (NumberFormatException e2) {
+								JOptionPane.showMessageDialog(null, "Nhập tiền là một số");
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
+							}
+						}
 					} else {
-						try {
-							Double.parseDouble(sotien);
-							Statement statement1 = conn.createStatement();
-							hoso h = new hoso(ngayvay,sotien,manh,masv);
-							statement1.executeUpdate("UPDATE `hoso` set  ngayvay='"+h.getNgayvay()+"', sotien='"+h.getSotien()+"' "
-									+ "where manh='"+manh+"' AND masv='"+masv+"'");
-							statement1.close();
-							shs.reloadHoSo();
-							shs.modelhs.fireTableDataChanged();
-							dispose();
-							JOptionPane.showMessageDialog(null, "Sửa thành công!");	
-						} catch (MysqlDataTruncation e3) {
-							JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
-						} catch (NumberFormatException e2) {
-							JOptionPane.showMessageDialog(null, "Nhập tiền là một số");
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
+						String tennganhang= comboBox.getSelectedItem().toString();
+						String tensinhvien= comboxTen.getSelectedItem().toString();
+						int index = ten.indexOf(tennganhang);
+						String manh = ma.get(index);
+						String masv = tensinhvien.substring(0,tensinhvien.indexOf('-'));
+						if (ngayvay.equals("") || sotien.equals("")) {
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
+						} else {
+							try {
+								Double.parseDouble(sotien);
+								Statement statement1 = conn.createStatement();
+								hoso h = new hoso(date,sotien,manh,masv);
+								statement1.executeUpdate("INSERT INTO `hoso` (`masv`, `manh`, `ngayvay`, `sotien`) VALUES ('"+h.getMasv()+"', '"+h.getManh()+"', '"+h.getNgayvay()+"', '"+h.getSotien()+"');");
+								statement1.close();
+								shs.reloadHoSo();
+								shs.modelhs.fireTableDataChanged();
+								dispose();
+								JOptionPane.showMessageDialog(null, "Chèn thành công!");
+							} catch (MySQLIntegrityConstraintViolationException e2) {
+								JOptionPane.showMessageDialog(null, "Mỗi sinh viên chỉ vay một ngân hàng");
+							} catch (NumberFormatException e3) {
+								JOptionPane.showMessageDialog(null, "Nhập tiền là một số");
+							} catch (Exception e4) {
+								e4.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
+								
+							}	
 						}
 					}
-				} else {
-					String tennganhang= comboBox.getSelectedItem().toString();
-					String tensinhvien= comboxTen.getSelectedItem().toString();
-					int index = ten.indexOf(tennganhang);
-					String manh = ma.get(index);
-					String masv = tensinhvien.substring(0,tensinhvien.indexOf('-'));
-					if (ngayvay.equals("") || sotien.equals("")) {
-						JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
-					} else {
-						try {
-							Double.parseDouble(sotien);
-							Statement statement1 = conn.createStatement();
-							hoso h = new hoso(ngayvay,sotien,manh,masv);
-							statement1.executeUpdate("INSERT INTO `hoso` (`masv`, `manh`, `ngayvay`, `sotien`) VALUES ('"+h.getMasv()+"', '"+h.getManh()+"', '"+h.getNgayvay()+"', '"+h.getSotien()+"');");
-							statement1.close();
-							shs.reloadHoSo();
-							shs.modelhs.fireTableDataChanged();
-							dispose();
-							JOptionPane.showMessageDialog(null, "Chèn thành công!");
-						} catch (MysqlDataTruncation e3) {
-							JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
-						} catch (MySQLIntegrityConstraintViolationException e2) {
-							JOptionPane.showMessageDialog(null, "Mỗi sinh viên chỉ vay một ngân hàng");
-						} catch (NumberFormatException e3) {
-							JOptionPane.showMessageDialog(null, "Nhập tiền là một số");
-						} catch (Exception e4) {
-							e4.printStackTrace();
-							JOptionPane.showMessageDialog(null, "Lỗi, vui lòng nhập lại");
-							
-						}	
-					}
+				} catch (ParseException e5) {
+					JOptionPane.showMessageDialog(null, "Nhập sai định dạng ngày");
 				}
-				
 			}
 		});
 		btnok.setFont(new Font("Tahoma", Font.BOLD, 15));

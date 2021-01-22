@@ -1,11 +1,11 @@
 
 public class hoso {
-	private String ngayvay;
+	private java.sql.Date ngayvay;
 	private String sotien;
 	private String manh;
 	private String masv;
 	
-	public hoso(String ngayvay, String sotien, String manh, String masv) {
+	public hoso(java.sql.Date ngayvay, String sotien, String manh, String masv) {
 		super();
 		this.ngayvay = ngayvay;
 		this.sotien = sotien;
@@ -29,10 +29,10 @@ public class hoso {
 		this.manh = manh;
 	}
 
-	public String getNgayvay() {
+	public java.sql.Date getNgayvay() {
 		return ngayvay;
 	}
-	public void setNgayvay(String ngayvay) {
+	public void setNgayvay(java.sql.Date ngayvay) {
 		this.ngayvay = ngayvay;
 	}
 	public String getSotien() {

@@ -1,12 +1,10 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,7 +18,6 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.Font;
 
 public class Xem extends JFrame {
 	dataConnection con;
@@ -121,7 +118,6 @@ public class Xem extends JFrame {
 		con = (dataConnection) new dataConnection();
 		conn = con.ConnectDB();
 		try {
-			Statement sta = conn.createStatement();
 			Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
 					+ "inner join hoso on hoso.masv = sinhvien.masv inner join nganhang on nganhang.manh = hoso.manh "
@@ -152,7 +148,6 @@ public class Xem extends JFrame {
 		con = (dataConnection) new dataConnection();
 		conn = con.ConnectDB();
 		try {
-			Statement sta = conn.createStatement();
 			Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
 					+ "inner join hoso on hoso.masv = sinhvien.masv inner join nganhang on nganhang.manh = hoso.manh "
