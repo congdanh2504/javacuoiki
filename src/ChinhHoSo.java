@@ -81,8 +81,7 @@ public class ChinhHoSo extends JFrame {
 				dispose();
 			}
 		});
-		dataConnection con = (dataConnection) new dataConnection();
-		Connection conn = con.ConnectDB();
+		Connection conn = new dataConnection().ConnectDB();
 		if (check==1) {
 			ten = new Vector<String>();
 			ma = new Vector<String>();

@@ -118,7 +118,6 @@ public class Sua extends JFrame{
 					if (n==0) {	
 						try {
 							Vector st = (Vector) vDatas.elementAt(tbsv.getSelectedRow());
-							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							statement.executeUpdate("Delete from sinhvien where masv = '"+st.elementAt(0)+"'");
 							vDatas.remove(tbsv.getSelectedRow());
@@ -191,7 +190,6 @@ public class Sua extends JFrame{
 							Vector st = (Vector) vDatah.elementAt(tbhs.getSelectedRow());
 							String smasv = masv.get(tensv.indexOf(st.elementAt(1)));
 							String smanh = manh.get(tennh.indexOf(st.elementAt(2)));
-							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							int check = statement.executeUpdate("Delete from hoso where masv= '"+smasv+"' and manh= '"+smanh+"'");
 							vDatah.remove(tbhs.getSelectedRow());
@@ -263,7 +261,6 @@ public class Sua extends JFrame{
 					if (n==0) {
 						try {
 							Vector st = (Vector) vDatan.elementAt(tbnh.getSelectedRow());
-							Statement sta = conn.createStatement();
 							Statement statement = conn.createStatement();
 							statement.executeUpdate("Delete from nganhang where manh= '"+st.elementAt(0)+"'");
 							vDatan.remove(tbnh.getSelectedRow());
@@ -295,9 +292,7 @@ public class Sua extends JFrame{
 			nganHangm.add(nChen);
 			JPanel nganHangC = new JPanel();
 			hoSo.add(nganHangC, BorderLayout.CENTER);
-			
-			dataConnection con = (dataConnection) new dataConnection();
-			conn = con.ConnectDB();
+			conn = new dataConnection().ConnectDB();
 			reloadsv();
 			modelsv = new DefaultTableModel(vDatas,vTitles);
 			tbsv = new JTable(modelsv);

@@ -24,6 +24,7 @@ public class ChinhNganHang extends JFrame {
 	private JTextField textmanh;
 	private JTextField texttennh;
 	private JTextField textlaivay;
+	Connection conn;
 	Sua snh;
 	int check;
 	public ChinhNganHang(String dma, String dten, String dlai, Sua suaNganHang, int n) {
@@ -74,8 +75,7 @@ public class ChinhNganHang extends JFrame {
 					} else {
 						try {
 							Double.parseDouble(laivay);
-							dataConnection con = (dataConnection) new dataConnection();
-							Connection conn = con.ConnectDB();
+							conn = new dataConnection().ConnectDB();
 							Statement statement1 = conn.createStatement();
 							nganhang nh = new nganhang(manh,tennh,laivay);
 							statement1.executeUpdate("UPDATE `nganhang` SET manh='"+nh.getManh()+"', tennganhang='"+nh.getTennganhang()+"', laixuat='"+nh.getLaivay()+"' "
@@ -98,8 +98,7 @@ public class ChinhNganHang extends JFrame {
 					} else {
 						try {	
 							Double.parseDouble(laivay);
-							dataConnection con = (dataConnection) new dataConnection();
-							Connection conn = con.ConnectDB();
+							conn = new dataConnection().ConnectDB();
 							Statement statement1 = conn.createStatement();
 							nganhang nh = new nganhang(manh,tennh,laivay);			
 							statement1.executeUpdate("INSERT INTO `nganhang` (`manh`, `tennganhang`, `laixuat`) VALUES ('"+nh.getManh()+"', '"+nh.getTennganhang()+"', '"+nh.getLaivay()+"');");

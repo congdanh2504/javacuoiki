@@ -66,7 +66,7 @@ public class Thongke2 extends JFrame {
 					dataset.setValue(new Double(soluong.get(j)), tennh.get(manh.indexOf(manh.get(i))), ngayvay.get(j));
 				}
 			}
-			JFreeChart chart = ChartFactory.createLineChart("Biểu đồ biểu diễn số lượng hồ sơ theo ngày", "Ngày", "Số hồ sơ", dataset);
+			JFreeChart chart = ChartFactory.createLineChart3D("Biểu đồ biểu diễn số lượng hồ sơ theo ngày", "Ngày", "Số hồ sơ", dataset);
 			CategoryPlot p = (CategoryPlot) chart.getPlot();
 			p.setRangeGridlinePaint(Color.BLUE);
 			JPanel panel = new JPanel();

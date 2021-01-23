@@ -29,7 +29,6 @@ public class Timkiem extends JFrame {
 	private JPanel contentPane;
 	private JTextField nhapten;
 	DefaultTableModel model;
-	dataConnection con;
 	JScrollPane tableresult;
 	Connection conn ;
 	Vector vData=null, vTitle=null;
@@ -67,8 +66,7 @@ public class Timkiem extends JFrame {
 				}
 			});
 			btnback.setFocusable(false);
-			con = (dataConnection) new dataConnection();
-			conn = con.ConnectDB();
+			conn = new dataConnection().ConnectDB();
 			try {
 				Statement statement = conn.createStatement();
 				ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
@@ -154,8 +152,7 @@ public class Timkiem extends JFrame {
 			JOptionPane.showMessageDialog(null, "Vui lòng nhập");
 		} else {
 			ten = Standardized(ten);
-			dataConnection con = (dataConnection) new dataConnection();
-			Connection conn = con.ConnectDB();
+			Connection conn = new dataConnection().ConnectDB();
 			try {
 				Statement statement = conn.createStatement();
 				

@@ -20,7 +20,6 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 public class Xem extends JFrame {
-	dataConnection con;
 	JScrollPane tableresult;
 	Connection conn ;
 	JPanel contentPane;
@@ -46,8 +45,7 @@ public class Xem extends JFrame {
 			pnback.setBackground(new Color(64, 157, 250));
 			pnback.add(btnback, BorderLayout.WEST);	
 			contentPane.add(pnback, BorderLayout.NORTH);
-			con = (dataConnection) new dataConnection();
-			conn = con.ConnectDB();
+			conn = new dataConnection().ConnectDB();
 			try {
 				Statement sta = conn.createStatement();
 				Statement statement = conn.createStatement();
@@ -115,8 +113,7 @@ public class Xem extends JFrame {
 		}	
 	}
 	public void sxNgayvay() {
-		con = (dataConnection) new dataConnection();
-		conn = con.ConnectDB();
+		conn = new dataConnection().ConnectDB();
 		try {
 			Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "
@@ -145,8 +142,7 @@ public class Xem extends JFrame {
 		tableresult.setViewportView(new JTable(vData,vTitle));
 	}
 	public void sxTien() {
-		con = (dataConnection) new dataConnection();
-		conn = con.ConnectDB();
+		conn = new dataConnection().ConnectDB();
 		try {
 			Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery("select sinhvien.masv as 'Ma sinh vien',hoten as 'Ho ten',ngaysinh as 'Ngay sinh',gioitinh as 'Gioi tinh',nganhhoc as 'Nganh hoc', lop 'Lop', truong as 'Truong',ngayvay as 'Ngay vay', sotien as 'So tien' ,tennganhang as 'Ten ngan hang', laixuat as 'Lai xuat' from SINHVIEN "

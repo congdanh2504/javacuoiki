@@ -29,26 +29,25 @@ public class Thongke extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(64, 157, 250));
 		setContentPane(contentPanel);
-		dataConnection con = (dataConnection) new dataConnection();
-		Connection conn = con.ConnectDB();
-		Vector<String> list = new Vector();
+		Connection conn = new dataConnection().ConnectDB();
+		Vector<String> tennh = new Vector();
 		try {
-			Statement sta = conn.createStatement();
 			Statement statement = conn.createStatement();	
 			ResultSet resultSet = statement.executeQuery("select tennganhang from nganhang");
 			while (resultSet.next()) {
-				list.add(resultSet.getString(1));
+				tennh.add(resultSet.getString(1));
 			}
-			int[] list1 = new int[list.size()];
+			int[] sohoso = new int[tennh.size()];
 			ResultSet resultSet1 = statement.executeQuery("select tennganhang, masv from nganhang inner join hoso on hoso.manh = nganhang.manh");
 			while (resultSet1.next()) {
-				list1[list.indexOf(resultSet1.getString(1))]++;
+				sohoso[tennh.indexOf(resultSet1.getString(1))]++;
 			}
 			
 			DefaultPieDataset pieDataset = new DefaultPieDataset();
-			for (int i=0;i<list.size();i++) {
-				pieDataset.setValue(list.get(i), new Integer(list1[i]*10));
+			for (int i=0;i<tennh.size();i++) {
+				pieDataset.setValue(tennh.get(i), new Integer(sohoso[i]*10));
 			}
 			JFreeChart jFreeChart = ChartFactory.createPieChart("Tỉ lệ sinh viên vay vốn mỗi ngân hàng", pieDataset, true, true, true);
 			PiePlot p = (PiePlot) jFreeChart.getPlot();
@@ -57,20 +56,18 @@ public class Thongke extends JFrame {
 			chartPanel.setBackground(new Color(64, 157, 250));
 			contentPanel.setBackground(Color.WHITE);
 			contentPanel.add(chartPanel, BorderLayout.WEST);
-			Vector<String> list3 = new Vector();
-			Vector<String> list4 = new Vector();
+			Vector<String> laixuat = new Vector();		
 			resultSet = statement.executeQuery("select * from nganhang");
 			while (resultSet.next()) {
-				list3.add(resultSet.getString(3));
-				list4.add(resultSet.getString(2));
+				laixuat.add(resultSet.getString(3));
 			}
 			resultSet.close();
 			statement.close();
 			DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
-			for (int i=0;i<list.size();i++) {
-				categoryDataset.setValue(Double.parseDouble(list3.get(i)), "Lãi xuất", list4.get(i));
+			for (int i=0;i<tennh.size();i++) {
+				categoryDataset.setValue(Double.parseDouble(laixuat.get(i)), "Lãi xuất", tennh.get(i));
 			}
-			JFreeChart jFreeChart1 = ChartFactory.createBarChart("Biểu đồ lãi vay từng ngân hàng","Tên ngân hàng","Lãi vay (%/tháng)", categoryDataset,PlotOrientation.VERTICAL, true, true, false);
+			JFreeChart jFreeChart1 = ChartFactory.createBarChart3D("Biểu đồ lãi vay từng ngân hàng","Tên ngân hàng","Lãi vay (%/tháng)", categoryDataset,PlotOrientation.VERTICAL, true, true, false);
 			CategoryPlot p1 = (CategoryPlot) jFreeChart1.getPlot();
 			jFreeChart1.setBackgroundPaint(new Color(64, 157, 250));
 			ChartPanel chartPanel1 = new ChartPanel(jFreeChart1);
@@ -115,6 +112,13 @@ public class Thongke extends JFrame {
 			statement.close();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Lỗi");
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

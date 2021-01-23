@@ -34,6 +34,7 @@ public class ChinhSinhVien extends JFrame {
 	private JTextField textnganh;
 	private JTextField texttruong;
 	private JTextField textlop;
+	Connection conn;
 	int check;
 	Sua ssv;
 	public ChinhSinhVien(String dmasv, String dhoten, String dngaysinh, String dgioitinh, String dnganh, String dlop, String dtruong, Sua sinhVien, int n) {
@@ -121,8 +122,7 @@ public class ChinhSinhVien extends JFrame {
 							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
 						} else {
 							try {
-								dataConnection con = (dataConnection) new dataConnection();
-								Connection conn = con.ConnectDB();
+								conn = new dataConnection().ConnectDB();
 								Statement statement1 = conn.createStatement();
 								sinhvien s = new sinhvien(masv,hoten,date,gioitinh,nganhhoc,lop,truong);
 								statement1.executeUpdate("UPDATE `sinhvien` set hoten='"+s.getHoten()+"', ngaysinh='"+s.getNgaysinh()+"', gioitinh='"+s.getGioitinh()+"', nganhhoc='"+s.getNganhhoc()+"', lop='"+s.getLop()+"', truong='"+s.getTruong()+"' "
@@ -141,8 +141,7 @@ public class ChinhSinhVien extends JFrame {
 							JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ");
 						} else {
 							try {
-								dataConnection con = (dataConnection) new dataConnection();
-								Connection conn = con.ConnectDB();
+								conn = new dataConnection().ConnectDB();
 								Statement statement1 = conn.createStatement();	
 								sinhvien s = new sinhvien(masv,hoten,date,gioitinh,nganhhoc,lop,truong);
 								int check = statement1.executeUpdate("INSERT INTO `sinhvien` (`masv`, `hoten`, `ngaysinh`, `gioitinh`, `nganhhoc`, `lop`, `truong`) VALUES ('"+s.getMasv()+"', '"+s.getHoten()+"', '"+s.getNgaysinh()+"', '"+s.getGioitinh()+"', '"+s.getNganhhoc()+"', '"+s.getLop()+"', '"+s.getTruong()+"');");
