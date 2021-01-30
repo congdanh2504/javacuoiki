@@ -96,7 +96,7 @@ public class Sua extends JFrame{
 					//System.out.println(selectedRowsv);
 					try {
 						Vector st = (Vector) vDatas.elementAt(tbsv.getSelectedRow());	
-						new ChinhSinhVien(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),st.get(3).toString(),st.get(4).toString(),st.get(5).toString(),st.get(6).toString(),Sua.this,1);	
+						new ChinhSinhVien(st.get(0).toString(),st.get(1).toString(),st.get(2).toString(),st.get(3).toString(),st.get(4).toString(),st.get(5).toString(),st.get(6).toString(),st.get(3).toString(),Sua.this,1);	
 					} catch (ArrayIndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null, "Không có gì để sửa");
 					}	
@@ -122,12 +122,12 @@ public class Sua extends JFrame{
 							statement.executeUpdate("Delete from sinhvien where masv = '"+st.elementAt(0)+"'");
 							vDatas.remove(tbsv.getSelectedRow());
 							modelsv.fireTableDataChanged();
+							reloadHoSo();
+							modelhs.fireTableDataChanged();
 							statement.close();
 							JOptionPane.showMessageDialog(null, "Xóa thành công!");
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							JOptionPane.showMessageDialog(null, "Không có gì để xóa");	
-						} catch (MySQLIntegrityConstraintViolationException e2) {
-							JOptionPane.showMessageDialog(null, "Xóa hồ sơ chứa sinh viên trước");
 						} catch (SQLException e1) {
 							JOptionPane.showMessageDialog(null, "Lỗi khi xóa");
 						}
@@ -145,7 +145,7 @@ public class Sua extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					new ChinhSinhVien("","","","","","","",Sua.this,2);
+					new ChinhSinhVien("","","","","","","","",Sua.this,2);
 				}
 			});
 			JPanel sinhVienC = new JPanel();
@@ -265,12 +265,12 @@ public class Sua extends JFrame{
 							statement.executeUpdate("Delete from nganhang where manh= '"+st.elementAt(0)+"'");
 							vDatan.remove(tbnh.getSelectedRow());
 							modelnh.fireTableDataChanged();
+							reloadHoSo();
+							modelhs.fireTableDataChanged();
 							statement.close();
 							JOptionPane.showMessageDialog(null, "Xóa thành công!");
 						} catch (ArrayIndexOutOfBoundsException e2) {
 							JOptionPane.showMessageDialog(null, "Không có gì để xóa");
-						} catch (MySQLIntegrityConstraintViolationException e2) {
-							JOptionPane.showMessageDialog(null, "Xóa hồ sơ chứa ngân hàng trước");
 						} catch (SQLException e1) {
 							JOptionPane.showMessageDialog(null, "Lỗi khi xóa");
 						}

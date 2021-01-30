@@ -47,7 +47,7 @@ public class Thongke extends JFrame {
 			
 			DefaultPieDataset pieDataset = new DefaultPieDataset();
 			for (int i=0;i<tennh.size();i++) {
-				pieDataset.setValue(tennh.get(i), new Integer(sohoso[i]*10));
+				pieDataset.setValue(tennh.get(i), new Double(sohoso[i]*10));
 			}
 			JFreeChart jFreeChart = ChartFactory.createPieChart("Tỉ lệ sinh viên vay vốn mỗi ngân hàng", pieDataset, true, true, true);
 			PiePlot p = (PiePlot) jFreeChart.getPlot();

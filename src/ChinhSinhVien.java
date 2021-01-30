@@ -37,7 +37,7 @@ public class ChinhSinhVien extends JFrame {
 	Connection conn;
 	int check;
 	Sua ssv;
-	public ChinhSinhVien(String dmasv, String dhoten, String dngaysinh, String dgioitinh, String dnganh, String dlop, String dtruong, Sua sinhVien, int n) {
+	public ChinhSinhVien(String dmasv, String dhoten, String dngaysinh, String dgioitinh, String dnganh, String dlop, String dtruong,String gioitinh, Sua sinhVien, int n) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(880, 180, 320, 325);
 		check =n;
@@ -75,6 +75,7 @@ public class ChinhSinhVien extends JFrame {
 		contentPane.add(cbgioitinh);
 		cbgioitinh.addItem("Nam");
 		cbgioitinh.addItem("Nu");
+		cbgioitinh.setSelectedItem(gioitinh);
 		JLabel lblnganh = new JLabel("Ngành");
 		lblnganh.setForeground(new Color(255, 255, 255));
 		lblnganh.setFont(new Font("Tahoma", Font.BOLD, 15));
